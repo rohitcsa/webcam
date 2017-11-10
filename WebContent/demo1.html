@@ -1,0 +1,56 @@
+<%@ page language="java" contentType="text/html; charset=ISO-8859-1"
+    pageEncoding="ISO-8859-1"%>
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
+<title>Insert title here</title>
+<style type="text/css">
+		body { font-family: Helvetica, sans-serif; }
+		h2, h3 { margin-top:0; }
+		form { margin-top: 15px; }
+		form > input { margin-right: 15px; }
+		#results { margin:20px; padding:20px; border:1px solid; background:#ccc; }
+	</style>
+</head>
+<body>
+<div id="my_camera"></div>
+	<h1>WebcamJS Test Page - HD Capture</h1>
+	<h3>Demonstrates 720p HD capture (1280x720), if your camera supports it!</h3>
+	<!-- First, include the Webcam.js JavaScript Library -->
+	<script type="text/javascript" src="bower_components/webcamjs/webcam.min.js"></script>
+	
+	<!-- Configure a few settings and attach camera -->
+	<script language="JavaScript">
+		Webcam.set({
+			width: 1280,
+			height: 720,
+			image_format: 'jpeg',
+			jpeg_quality: 90,
+			constraints: {
+				width: { exact: 1280 },
+				height: { exact: 720 }
+			}
+		});
+		Webcam.attach( '#my_camera' );
+	</script>
+	<form>
+		<input type=button value="Take HD Snapshot" onClick="take_snapshot()">
+	</form>
+	
+	<!-- Code to handle taking the snapshot and displaying it locally -->
+	<script language="JavaScript">
+		function take_snapshot() {
+			// take snapshot and get image data
+			Webcam.snap( function(data_uri) {
+				// display results in page
+				document.getElementById('results').innerHTML = 
+					'<h2>Here is your large image:</h2>' + 
+					'<img src="'+data_uri+'"/>';
+			} );
+		}
+	</script>
+	
+	<div id="results">Your captured image will appear here...</div>
+</body>
+</html>
